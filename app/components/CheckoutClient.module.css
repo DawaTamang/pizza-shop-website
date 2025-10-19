@@ -1,0 +1,291 @@
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    background-color: #f9f9f9;
+}
+
+.checkoutGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.leftColumn, .rightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.rightColumn .card {
+    position: sticky;
+    top: 120px; /* Adjust based on header height */
+}
+
+.card {
+    background-color: white;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+}
+
+.card h3 {
+    font-size: 1.3rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+.cartItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.cartItem:last-child {
+    border-bottom: none;
+}
+.itemInfo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.quantity { font-weight: bold; color: var(--primary-color); }
+.itemControls { display: flex; align-items: center; gap: 0.75rem; }
+.itemPrice { font-weight: 600; }
+.quantityBtn {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.formGroup label { font-weight: 600; font-size: 0.9rem; }
+.formGroup input, .formGroup select, .card textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+.card textarea { resize: vertical; min-height: 80px; }
+
+.summaryLine {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: #555;
+}
+.successText {
+    color: #28a745;
+    font-weight: bold;
+}
+.totalLine {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+    margin-top: 1rem;
+}
+
+.promoGroup {
+    display: flex;
+    gap: 0.5rem;
+}
+.promoGroup input {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.5rem;
+    width: 120px;
+}
+.promoGroup button {
+    background: #e9e9e9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0 0.75rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.tipSection {
+    margin: 1.5rem 0;
+}
+.tipButtons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+}
+.tipButtons button, .tipButtons input {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+    cursor: pointer;
+    font-weight: 600;
+    text-align: center;
+    font-size: 0.9rem;
+}
+.tipButtons button:hover, .tipButtons button:focus {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    outline: none;
+}
+.tipButtons input {
+    grid-column: 1 / -1;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 1.5rem 0;
+}
+
+.orderButton {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.orderButton:hover {
+    background-color: #111;
+}
+
+/* Redesigned Empty Cart Styles */
+.emptyCart {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    margin-top: 2rem;
+}
+
+.emptyCartIcon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.emptyCart h2 {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--secondary-color);
+}
+
+.emptyCart p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.emptyCart .orderButton {
+    display: inline-block;
+    width: auto;
+    background-color: var(--primary-color);
+}
+.emptyCart .orderButton:hover {
+    background-color: #c82a1f;
+}
+
+
+@media (max-width: 900px) {
+    .checkoutGrid {
+        grid-template-columns: 1fr;
+    }
+    .rightColumn .card {
+        position: static;
+        top: 0;
+    }
+}
+
+/* --- ADD THESE STYLES TO THE END OF THE FILE --- */
+
+.confirmationOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 3000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmationModal {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+.confirmationModal h3 {
+  margin-top: 0;
+  font-size: 1.4rem;
+}
+
+.confirmationModal p {
+  color: #555;
+  margin: 1rem 0 2rem;
+}
+
+.confirmationActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.noButton, .yesButton {
+  flex: 1;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.noButton {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  color: #333;
+}
+.noButton:hover {
+  background-color: #ddd;
+}
+
+.yesButton {
+  background-color: var(--primary-color);
+  color: white;
+}
+.yesButton:hover {
+  opacity: 0.85;
+}

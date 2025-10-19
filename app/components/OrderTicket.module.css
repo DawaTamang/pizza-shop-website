@@ -1,0 +1,171 @@
+.ticket {
+  position: relative; /* Needed for the overlay */
+  background-color: white;
+  color: #333; /* FIX: Set a default dark color for all text */
+  border: 1px solid #ddd;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  font-family: Arial, sans-serif;
+  border-left: 6px solid #888;
+  transition: border-color 0.3s ease;
+}
+
+/* Color code tickets by status */
+.ticket.pending { border-left-color: #ffc107; }
+.ticket.accepted, .ticket.preparing { border-left-color: #007bff; }
+.ticket.ready { border-left-color: #28a745; }
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+.header h3 { margin: 0; font-size: 1.3rem; }
+.time, .header strong { font-weight: bold; font-size: 1rem; color: #555; }
+
+.customerInfo {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.itemList { list-style: none; padding: 0; margin: 0; }
+.itemList li { 
+  margin-bottom: 1rem; 
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed #eee;
+}
+.itemList li:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.itemHeader { display: flex; gap: 0.75rem; font-size: 1.1rem; align-items: center; }
+.quantity { 
+  font-weight: bold; 
+  background-color: var(--primary-color); 
+  color: white; 
+  border-radius: 4px; 
+  padding: 0.2rem 0.6rem; 
+  font-size: 0.9rem;
+}
+.itemName { font-weight: bold; }
+
+.customizations {
+    font-size: 0.9rem;
+    padding-left: 1rem;
+    margin-top: 0.75rem;
+    color: #555;
+    border-left: 3px solid #eee;
+}
+.customizationItem { margin-bottom: 0.35rem; }
+.instruction {
+    display: block;
+    margin-left: 1rem;
+    color: var(--primary-color);
+    font-weight: bold;
+    background-color: #fffbe6;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.generalNotes {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background-color: #fffbe6;
+    border-radius: 4px;
+    border: 1px solid #ffeeba;
+    font-weight: 500;
+}
+.generalNotes strong {
+    color: #856404;
+}
+
+.actions { margin-top: 1.5rem; }
+.actionsGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.actions:has(button:only-child) { grid-template-columns: 1fr; }
+.actions button {
+  border: none;
+  padding: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+}
+.actions button:hover {
+  opacity: 0.85;
+}
+
+.rejectButton { background-color: #dc3545; color: white; }
+.acceptButton { background-color: #28a745; color: white; }
+.readyButton { background-color: #007bff; color: white; }
+.completeButton { background-color: #6c757d; color: white; }
+
+.loadingSpinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    margin: 0.5rem auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.timeSelectorOverlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(2px);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 8px; /* Match the parent ticket's border-radius */
+}
+.timeSelectorOverlay h4 {
+  margin: 0 0 1.5rem;
+  font-size: 1.2rem;
+}
+.timeButtons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 1.5rem;
+}
+.timeButtons button {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.timeButtons button:hover {
+  background-color: #ddd;
+  border-color: #ccc;
+  transform: translateY(-2px);
+}
+.cancelButton {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9rem;
+}

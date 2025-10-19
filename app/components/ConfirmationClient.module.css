@@ -1,0 +1,131 @@
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.confirmationBox {
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+
+.header {
+    background-color: #f7f7f7;
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.checkIcon {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.header h1 {
+    font-size: 2rem;
+    margin: 0 0 0.5rem;
+}
+.header p {
+    color: #555;
+    margin: 0;
+}
+
+.orderDetails {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background-color: #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.detailItem {
+    background-color: white;
+    padding: 1rem;
+    text-align: center;
+}
+.detailItem span {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.25rem;
+}
+.detailItem strong {
+    font-size: 1.2rem;
+}
+
+.orderSummary {
+    padding: 1.5rem 2rem;
+}
+.orderSummary h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.summaryItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    font-size: 0.9rem;
+}
+.itemInfo {
+    display: flex;
+    gap: 0.75rem;
+}
+.quantity {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.totalLine {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid #333;
+}
+
+.returnButton {
+    display: block;
+    width: calc(100% - 4rem);
+    margin: 0 2rem 2rem;
+    padding: 1rem;
+    background-color: var(--secondary-color);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+.returnButton:hover {
+    background-color: #111;
+}
+
+.customizationList {
+    list-style: none;
+    padding-left: 1rem;
+    margin: 0.25rem 0 0;
+    font-size: 0.8rem;
+    color: #777;
+}
+
+/* ADD THIS TO THE END OF THE FILE */
+.loadingMessage {
+  text-align: center;
+  padding: 4rem;
+  font-size: 1.2rem;
+  color: #555;
+}

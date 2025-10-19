@@ -1,0 +1,188 @@
+.header {
+  background-color: var(--card-background);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #eee;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.headerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+/* --- Logo Block Styles --- */
+.logoBlock {
+  display: flex;
+  align-items: center;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1.5rem 0.5rem 0.5rem; /* Adjusted padding */
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  margin: 0.5rem 0;
+  border-radius: 8px;
+}
+
+.logoImage {
+  object-fit: contain;
+  margin-right: 1rem; /* Adjusted margin */
+  width: 60px; /* Slightly smaller image */
+  height: 60px;
+  flex-shrink: 0; /* Prevents image from shrinking */
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1; /* Reduced line height */
+  white-space: nowrap; /* Keep text on one line if possible */
+}
+
+.tagline {
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+  font-size: 1.6rem; /* Adjusted font size */
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+}
+
+.phone {
+  font-size: 1.2rem; /* Adjusted font size */
+  font-weight: 700;
+  margin-top: 0.15rem; /* Adjusted margin */
+  letter-spacing: 0.5px; /* Slightly reduced letter spacing */
+}
+/* --- End of Logo Block Styles --- */
+
+
+/* --- Main Navigation Styles --- */
+.navContainer {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav a {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 2.5rem 0;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav a:hover {
+  color: var(--secondary-color);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.orderButton {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+.orderButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(228, 61, 48, 0.4);
+}
+
+.cartLink {
+  position: relative; font-size: 1.8rem; padding: 0.5rem; transition: transform 0.2s; color: var(--secondary-color);
+}
+.cartLink:hover { transform: scale(1.1); }
+.cartCount {
+  position: absolute; top: 0; right: 0; background-color: var(--primary-color); color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; justify-content: center; align-items: center; font-size: 0.8rem; font-weight: bold;
+}
+
+.hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0; z-index: 1001; }
+.hamburgerBar { display: block; width: 25px; height: 3px; margin: 5px 0; background-color: var(--secondary-color); border-radius: 3px; }
+
+/* --- MOBILE STYLES --- */
+@media (max-width: 1024px) {
+  /* Smaller adjustments for slightly smaller screens */
+  .tagline { font-size: 1.4rem; }
+  .phone { font-size: 1.1rem; }
+  .logoImage { width: 50px; height: 50px; margin-right: 0.75rem; }
+  .logoBlock { padding: 0.4rem 1rem 0.4rem 0.4rem; }
+
+  .nav a {
+    padding: 0.5rem 0;
+  }
+
+  .navContainer {
+    position: fixed; top: 0; right: 0; width: 280px; height: 100vh; background-color: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1); flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 6rem 2rem 2rem; gap: 2rem; transform: translateX(100%); transition: transform 0.3s ease-in-out;
+  }
+
+  .navOpen { transform: translateX(0); }
+  .nav { flex-direction: column; align-items: flex-start; width: 100%; gap: 1.5rem; }
+  .nav a { font-size: 1.2rem; color: var(--secondary-color); }
+  .nav a:hover { border-bottom: none; color: var(--primary-color); }
+
+  .actions {
+    flex-direction: column; align-items: flex-start; width: 100%; gap: 1.5rem; margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid #eee;
+  }
+  .hamburger { display: block; }
+}
+
+@media (max-width: 768px) {
+    /* Further adjustments for tablets in portrait mode */
+    .tagline { font-size: 1.2rem; }
+    .phone { font-size: 1rem; }
+    .logoImage { width: 40px; height: 40px; margin-right: 0.5rem; }
+    .logoBlock { padding: 0.3rem 0.8rem 0.3rem 0.3rem; }
+}
+
+@media (max-width: 480px) {
+    /* Even smaller for phones */
+    .logoBlock {
+        padding: 0.25rem 0.5rem; /* Reduced padding */
+        margin: 0.5rem 0;
+    }
+    .logoImage { display: none; } /* Hide the small logo on very small screens to save space */
+    .tagline { font-size: 1rem; } /* Smallest font size */
+    .phone { font-size: 0.9rem; } /* Smallest font size */
+}
+
+/* --- ADD THESE STYLES TO THE END OF THE FILE --- */
+
+/* Keyframes define the animation steps */
+@keyframes bump {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* This class applies the animation to the cart link */
+.bump {
+  animation: bump 0.3s ease-in-out;
+}

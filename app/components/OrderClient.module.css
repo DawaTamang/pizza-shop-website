@@ -1,0 +1,229 @@
+.pageContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.pageHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.pageHeader h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.pageHeader p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* --- STICKY NAVIGATION & SEARCH STYLES --- */
+.stickyNavWrapper {
+  position: sticky;
+  top: 90px;
+  z-index: 100;
+  background-color: var(--background-color);
+  padding-top: 1rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.filterLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.categoryNavbar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.searchContainer {
+  padding-bottom: 1.5rem;
+  text-align: center;
+}
+
+.searchBar {
+  width: 100%;
+  max-width: 600px;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid #ddd;
+  border-radius: 50px;
+  font-size: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+/* --- END OF STICKY STYLES --- */
+
+.categoryButton, .activeCategory {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #ddd;
+  background-color: var(--card-background);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: 50px;
+  transition: all 0.2s ease-in-out;
+  color: #333;
+}
+
+.categoryButton:hover {
+  background-color: #f0f0f0;
+  border-color: #ccc;
+}
+
+.activeCategory {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 4px 10px rgba(228, 61, 48, 0.3);
+  transform: translateY(-2px);
+}
+
+.menuSectionTitle {
+  font-size: 1.8rem;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.menuGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.menuItemCard {
+  background-color: var(--card-background);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  display: flex;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cardContent h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.cardContent p {
+  font-size: 0.9rem;
+  color: #666;
+  flex-grow: 1;
+  margin-bottom: 1rem;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardFooter span {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.cardFooter button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+.cardFooter button:hover {
+  background-color: #c82a1f;
+}
+
+.cardImageContainer {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+}
+
+.cardImageContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.floatingCartButton {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 1000;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.floatingCartButton:hover {
+  transform: scale(1.05);
+}
+
+.searchCategoryTitle {
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.noResults {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  padding: 4rem 0;
+}
+
+/* --- ADD THESE STYLES TO THE END OF THE FILE --- */
+
+/* Keyframes define the animation steps */
+@keyframes bump {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15); /* Slightly less aggressive for a floating button */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* This class applies the animation to the floating cart button */
+.bump {
+  animation: bump 0.3s ease-in-out;
+}

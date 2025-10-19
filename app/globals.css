@@ -1,0 +1,56 @@
+:root {
+  --primary-color: #e43d30;
+  --secondary-color: #2c2c2c;
+  --background-color: #f4f4f4;
+  --card-background: #ffffff;
+  --text-color: #333;
+  --text-light: #fff;
+  --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  /*overflow-x: hidden;*/
+  font-family: var(--font-main);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  /* This enables smooth scrolling when you click the nav links! */
+  scroll-behavior: smooth;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--primary-color);
+    display: inline-block;
+}
+
+main {
+  /* This value should match your header's height */
+  padding-top: 80px; 
+}
+
+section {
+    padding-top: 4rem; /* Offset for the fixed header */
+    margin-top: -2rem; /* Adjust to align perfectly */
+}

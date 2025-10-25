@@ -1,115 +1,9 @@
-/*"use client";
-
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { supabase } from '../../lib/supabaseClient';
-import styles from './ConfirmationClient.module.css'; // We can reuse the existing styles
-import Link from 'next/link';
-
-const OrderStatusClient = () => {
-    const [orderDetails, setOrderDetails] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const params = useParams(); // Hook to get URL parameters on the client
-    const router = useRouter();
-
-    useEffect(() => {
-        const fetchOrder = async () => {
-            const { orderId } = params;
-            if (!orderId) {
-                setLoading(false);
-                return;
-            }
-
-            try {
-                const { data, error } = await supabase
-                    .from('orders')
-                    .select(`*, order_items(*)`)
-                    .eq('id', orderId)
-                    .single();
-
-                if (error || !data) {
-                    throw new Error(error?.message || "Order not found");
-                }
-                setOrderDetails(data);
-            } catch (error) {
-                console.error("Failed to fetch order:", error);
-                setOrderDetails(null); // Ensure orderDetails is null on error
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchOrder();
-    }, [params]);
-
-    if (loading) {
-        return <p className={styles.loadingMessage}>Loading your order confirmation...</p>;
-    }
-
-    if (!orderDetails) {
-        return (
-            <div className={styles.container}>
-                <div className={styles.confirmationBox}>
-                    <div className={styles.header}>
-                        <h1>Order Not Found</h1>
-                        <p>We couldn't find the details for this order. Please check the link or contact the store.</p>
-                    </div>
-                    <Link href="/" className={styles.returnButton}>Return to Homepage</Link>
-                </div>
-            </div>
-        );
-    }
-
-    const { id, order_items, total, order_type, estimated_ready_time } = orderDetails;
-
-    return (
-        <div className={styles.container}>
-            <div className={styles.confirmationBox}>
-                <div className={styles.header}>
-                    <span className={styles.checkIcon}>✔</span>
-                    <h1>Thank You For Your Order!</h1>
-                    <p>Your order has been received and is being prepared.</p>
-                </div>
-                <div className={styles.orderDetails}>
-                    <div className={styles.detailItem}>
-                        <span>Order Number</span>
-                        <strong>{id.substring(0, 8).toUpperCase()}</strong>
-                    </div>
-                    <div className={styles.detailItem}>
-                        <span>Estimated {order_type === 'pickup' ? 'Pickup' : 'Delivery'} Time</span>
-                        <strong>{estimated_ready_time || "ASAP (Est. 20-30 mins)"}</strong>
-                    </div>
-                </div>
-                <div className={styles.orderSummary}>
-                    <h3>Order Summary</h3>
-                    {order_items.map(item => (
-                        <div key={item.id} className={styles.summaryItem}>
-                            <div className={styles.itemInfo}>
-                                <span className={styles.quantity}>{item.quantity}x</span>
-                                <span className={styles.itemName}>{item.item_name}</span>
-                            </div>
-                            <span className={styles.itemPrice}>${(item.price_at_order * item.quantity).toFixed(2)}</span>
-                        </div>
-                    ))}
-                    <div className={styles.totalLine}>
-                        <span>Total Paid</span>
-                        <strong>${parseFloat(total).toFixed(2)}</strong>
-                    </div>
-                </div>
-                <Link href="/order" className={styles.returnButton}>Return to Menu</Link>
-            </div>
-        </div>
-    );
-};
-
-export default OrderStatusClient;*/
-
 "use client";
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { supabase } from '../../lib/supabaseClient';
-import styles from './OrderStatusClient.module.css';
+import styles from './OrderStatusClient.module.css'; // Reuse the existing styles
 import Link from 'next/link';
 
 const OrderStatusClient = () => {
@@ -121,106 +15,103 @@ const OrderStatusClient = () => {
     useEffect(() => {
         const { orderId } = params;
         if (!orderId) {
+            // If no orderId in URL, redirect to home
             router.push('/');
             return;
         }
 
         // 1. Fetch the initial order data
         const fetchOrder = async () => {
-            const { data, error } = await supabase
-                .from('orders')
-                .select(`*, order_items(*)`)
-                .eq('id', orderId)
-                .single();
+            setLoading(true); // Start loading
+            try {
+                const { data, error } = await supabase
+                    .from('orders')
+                    .select(`*, order_items(*)`) // Fetch items too
+                    .eq('id', orderId)
+                    .single();
 
-            if (error || !data) {
-                console.error("Failed to fetch order:", error);
-                setOrderDetails(null);
-            } else {
+                if (error || !data) {
+                    throw new Error(error?.message || "Order not found");
+                }
                 setOrderDetails(data);
+            } catch (error) {
+                console.error("Failed to fetch order:", error);
+                setOrderDetails(null); // Set to null if fetch fails
+            } finally {
+                setLoading(false); // Stop loading regardless of outcome
             }
-            setLoading(false);
         };
 
         fetchOrder();
 
-        // 2. Set up a real-time subscription
+        // 2. Set up a real-time subscription to listen for updates to THIS order
         const channel = supabase.channel(`order-status-${orderId}`)
-            .on('postgres_changes', 
-                { 
-                    event: 'UPDATE', 
-                    schema: 'public', 
-                    table: 'orders', 
-                    filter: `id=eq.${orderId}` 
-                }, 
+            .on('postgres_changes',
+                {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'orders',
+                    filter: `id=eq.${orderId}` // Only listen for changes to this specific order ID
+                },
                 (payload) => {
-                    console.log('Order status updated!', payload.new);
-                    // When an update is received, update the state with the new order details
+                    console.log('Order status updated via realtime!', payload.new);
+                    // When an update is received, update the local state with the new order details
+                    // We merge payload.new into existing details to preserve order_items if they weren't sent
                     setOrderDetails(currentDetails => ({ ...currentDetails, ...payload.new }));
                 }
             )
-            .subscribe();
+            .subscribe((status) => {
+                if (status === 'SUBSCRIBED') {
+                    console.log(`Realtime subscribed for order ${orderId}`);
+                }
+                if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+                    console.error(`Realtime subscription error for order ${orderId}: ${status}`);
+                    // Optionally, you could try to refetch or notify the user
+                }
+            });
 
-        // 3. Cleanup the subscription when the component is unmounted
+        // 3. Cleanup the subscription when the component is unmounted or orderId changes
         return () => {
+            console.log(`Removing channel for order ${orderId}`);
             supabase.removeChannel(channel);
         };
 
-    }, [params, router]);
+    }, [params, router]); // Re-run effect if params change
 
+    // Function to render the correct status message and icon based on order status
     const renderStatusContent = () => {
         switch (orderDetails?.status) {
             case 'pending':
-                return {
-                    icon: '⏳',
-                    title: 'Waiting for Confirmation',
-                    message: 'Your order has been sent to the restaurant. We are waiting for them to accept it.'
-                };
+                return { icon: '⏳', title: 'Waiting for Confirmation', message: 'Your order has been sent. Waiting for the restaurant to accept...' };
             case 'accepted':
             case 'preparing':
-                 return {
-                    icon: '✔',
-                    title: 'Order Confirmed!',
-                    message: 'The restaurant has accepted your order and is preparing it now.'
-                };
+                 return { icon: '🧑‍🍳', title: 'Order Confirmed!', message: 'The restaurant is preparing your order.' };
             case 'ready':
-                return {
-                    icon: '🎉',
-                    title: 'Your Order is Ready!',
-                    message: `Your order is now ready for ${orderDetails.order_type}.`
-                };
+                return { icon: '🎉', title: 'Your Order is Ready!', message: `Ready for ${orderDetails.order_type === 'pickup' ? 'pickup' : 'delivery'}!` };
              case 'rejected':
-                return {
-                    icon: '❌',
-                    title: 'Order Not Accepted',
-                    message: 'Unfortunately, the restaurant was unable to accept your order at this time. You have not been charged. Please contact the store for more details.'
-                };
+                return { icon: '❌', title: 'Order Not Accepted', message: 'Unfortunately, the restaurant could not accept your order. You have not been charged.' };
             case 'completed':
-                 return {
-                    icon: '✅',
-                    title: 'Order Completed!',
-                    message: 'Thank you for your business!'
-                };
-            default:
-                return {
-                    icon: '❓',
-                    title: 'Order Not Found',
-                    message: "We couldn't find the details for this order. Please check the link or contact the store."
-                };
+                 return { icon: '✅', title: 'Order Completed!', message: 'Thank you for your order!' };
+            default: // Handles null or unexpected status
+                return { icon: '❓', title: 'Order Status Unknown', message: "Checking order details..." };
         }
     };
+
+    // --- Render Logic ---
 
     if (loading) {
         return <p className={styles.loadingMessage}>Loading your order status...</p>;
     }
 
+    // Handle case where order fetch failed or returned no data
     if (!orderDetails) {
          return (
             <div className={styles.container}>
                 <div className={styles.confirmationBox}>
-                    <div className={styles.header}>
+                    <div className={`${styles.header} ${styles.rejected}`}>
+                        <span className={styles.statusIcon}>❌</span>
                         <h1>Order Not Found</h1>
-                        <p>We couldn't find the details for this order.</p>
+                        <p>We couldn't find details for this order. Please check the link or contact the store.</p>
                     </div>
                     <Link href="/" className={styles.returnButton}>Return to Homepage</Link>
                 </div>
@@ -228,13 +119,14 @@ const OrderStatusClient = () => {
         );
     }
 
-    const { id, order_items, total, order_type, estimated_ready_time } = orderDetails;
+    // If order details are available, render the status page
+    const { id, order_items, total, order_type, estimated_ready_time, status } = orderDetails;
     const statusContent = renderStatusContent();
 
     return (
         <div className={styles.container}>
             <div className={styles.confirmationBox}>
-                <div className={`${styles.header} ${styles[orderDetails.status]}`}>
+                <div className={`${styles.header} ${styles[status] || styles.pending}`}>
                     <span className={styles.statusIcon}>{statusContent.icon}</span>
                     <h1>{statusContent.title}</h1>
                     <p>{statusContent.message}</p>
@@ -243,11 +135,11 @@ const OrderStatusClient = () => {
                 <div className={styles.orderDetails}>
                     <div className={styles.detailItem}>
                         <span>Order Number</span>
-                        <strong>{id.substring(0, 8).toUpperCase()}</strong>
+                        <strong>#{id.substring(0, 8).toUpperCase()}</strong>
                     </div>
                     <div className={styles.detailItem}>
-                        <span>Estimated Time</span>
-                        <strong>{estimated_ready_time || "Pending..."}</strong>
+                        <span>Est. Ready Time</span>
+                        <strong>{estimated_ready_time || (status === 'pending' ? 'Waiting...' : 'ASAP')}</strong>
                     </div>
                 </div>
 

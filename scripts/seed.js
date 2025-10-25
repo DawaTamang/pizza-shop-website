@@ -5,8 +5,8 @@ const { menuData } = require('../data/menu');
 const { toppings, wingSauces, dippingSauces, canPops, twoLiterPops } = require('../data/options');
 
 // Manually enter your Supabase credentials here for the script
-const SUPABASE_URL = 'https://xzgcbseiwwqjqpbbeoey.supabase.co';
-const SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6Z2Nic2Vpd3dxanFwYmJlb2V5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MDY4NjM5MiwiZXhwIjoyMDc2MjYyMzkyfQ.lgpyrZXhJE_adfLp0r5Cto8aIpUuYWW7Tv_Q-JAaLjY';
+const SUPABASE_URL = 'YOUR SUPABASE_URL';
+const SUPABASE_SERVICE_KEY = 'SERVICE_ROLE key';
 
 // IMPORTANT: Use your SERVICE_ROLE key for this script. You can find it in your Supabase
 // dashboard under Settings > API > Project API Keys (it's the 'secret' one).
